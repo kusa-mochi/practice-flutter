@@ -74,22 +74,25 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('A random idea:'),
-          MochiCard(pair: pair),
-          ElevatedButton(
-            onPressed: () {
-              appState.getNext();
-            },
-            child: Column(
-              children: [
-                Text('Next'),
-                Text(':D'),
-              ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MochiCard(pair: pair),
+            SizedBox(height: 48),
+            ElevatedButton(
+              onPressed: () {
+                appState.getNext();
+              },
+              child: Column(
+                children: [
+                  Text('Next'),
+                  Text(':D'),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -106,12 +109,21 @@ class MochiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final style = theme.textTheme.displayMedium!.copyWith(
+      // Ctrl+Shift+Space で、copyWithで指定可能なすべてのプロパティを表示できる。
+      color: theme.colorScheme.onPrimary,
+    );
 
     return Card(
       color: theme.colorScheme.primary,
+      elevation: 20.0,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(pair.asLowerCase),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
       ),
     );
   }
